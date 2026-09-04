@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prashant Singh Chauhan | 3D Futuristic Portfolio</title>
+    <meta name="description" content="Futuristic 3D Portfolio of Prashant Singh Chauhan - Engineering Enthusiast, Full-Stack Developer & Three.js WebGL Creator.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Three.js (WebGL 3D Library) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <!-- ==========================================
+         TOP HUD TELEMETRY & NAVIGATION BAR
+         ========================================== -->
+    <nav class="hud-nav">
+        <a href="#home" class="brand-logo" aria-label="Home">
+            <div class="logo-badge">P</div>
+            <div class="logo-meta">
+                <span class="logo-title">PRASHANT</span>
+                <span class="logo-sub">CORE_DEV_v2.6</span>
+            </div>
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#terminal">Terminal</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="hud-telemetry">
+            <div class="telemetry-item" title="Local System Time">
+                <span class="fps-dot"></span>
+                <span id="hud-time-display">UTC+05:30 [00:00:00]</span>
+            </div>
+            <div class="telemetry-item" title="WebGL Framerate">
+                <span id="hud-fps-display">60 FPS</span>
+            </div>
+            <button id="audio-toggle-btn" class="audio-toggle-btn" title="Toggle Sci-Fi Web Audio Synthesizer">
+                <div class="audio-waves">
+                    <span></span><span></span><span></span>
+                </div>
+                <span class="audio-status">AUDIO: ON</span>
+            </button>
+        </div>
+
+        <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+    </nav>
+
+    <!-- ==========================================
+         FOREGROUND CONTENT WRAPPER
+         ========================================== -->
+    <div class="content-wrapper">
+
+        <!-- ---------------------------------------
+             1. HERO SECTION & 3D MODEL VIEWPORT
+             --------------------------------------- -->
+        <section id="home">
+            <div id="webgl-container" aria-hidden="true">
+                <canvas id="webgl-canvas"></canvas>
+            </div>
+
+            <div class="hero-container">
+                <!-- Left: Headline & Bio -->
+                <div class="hero-text sci-fi-reveal">
+                    <div class="hero-badge-strip">
+                        <span class="status-indicator">
+                            <span class="pulse-node"></span>
+                            SYSTEM ONLINE [DEV_CORE_V2.6]
+                        </span>
+                        <span class="location-tag">NAGPUR, IN // PCE CAMPUS</span>
+                    </div>
+
+                    <h1 class="hero-glitch-title">
+                        I'M <br>
+                        <span>PRASHANT SINGH CHAUHAN</span>
+                    </h1>
+
+                    <p class="hero-tagline">&gt; Aspiring Developer &amp; Engineering Enthusiast</p>
+
+                    <p class="hero-summary">
+                        Architecting sleek, modern web experiences, high-performance WebGL interfaces, and translating complex engineering concepts into reality.
+                    </p>
+
+                    <div class="hero-cta-group">
+                        <a href="#projects" class="cyber-btn cyber-btn-primary">
+                            <span>EXPLORE WORK</span>
+                            <span class="btn-corner-deco"></span>
+                        </a>
+                        <a href="#contact" class="cyber-btn cyber-btn-outline">
+                            <span>ESTABLISH UPLINK</span>
+                            <span class="btn-corner-deco"></span>
+                        </a>
+                    </div>
+
+                    <!-- Telemetry Stats -->
+                    <div class="hero-telemetry-grid">
+                        <div class="telemetry-card">
+                            <span class="telemetry-val">4+</span>
+                            <span class="telemetry-lbl">Live Deployments</span>
+                        </div>
+                        <div class="telemetry-card">
+                            <span class="telemetry-val">100%</span>
+                            <span class="telemetry-lbl">Code Integrity</span>
+                        </div>
+                        <div class="telemetry-card">
+                            <span class="telemetry-val">24/7</span>
+                            <span class="telemetry-lbl">Innovation Drive</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Interactive 3D Model HUD Controller -->
+                <div class="hero-model-controls sci-fi-reveal">
+                    <div class="model-control-widget">
+                        <div class="widget-header">
+                            <div class="widget-title">
+                                <span>◈</span>
+                                <span>3D HOLO-VIEWPORT</span>
+                            </div>
+                            <span class="widget-hint">CLICK &amp; DRAG TO ROTATE IN 360°</span>
+                        </div>
+
+                        <!-- 3D Model Mode Switcher -->
+                        <div class="model-mode-selector">
+                            <button class="model-btn active" data-model="core">[1] QUANTUM CORE</button>
+                            <button class="model-btn" data-model="drone">[2] CYBER DRONE</button>
+                            <button class="model-btn" data-model="matrix">[3] NEURAL MATRIX</button>
+                        </div>
+
+                        <!-- Secondary Viewport Controls -->
+                        <div class="model-toggles">
+                            <button id="wireframe-toggle-btn" class="control-pill" aria-pressed="false">⬡ WIREFRAME</button>
+                            <button id="autorotate-toggle-btn" class="control-pill active" aria-pressed="true">⟳ AUTO-ROTATE</button>
+                            <button id="speed-toggle-btn" class="control-pill">1X SPEED</button>
+                            <button id="reset-view-btn" class="control-pill">↺ RESET</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ---------------------------------------
+             2. ABOUT ME & 3D HOLOGRAPHIC ID BADGE
+             --------------------------------------- -->
+        <section id="about">
+            <div class="section-header sci-fi-reveal">
+                <span class="section-tag">// BIOMETRIC DOSSIER</span>
+                <h2 class="section-title">ABOUT <span>ME</span></h2>
+            </div>
+
+            <div class="about-grid">
+                <!-- 3D Holographic Identity Card -->
+                <div class="holo-card-wrapper sci-fi-reveal">
+                    <div class="holo-id-card" id="holo-id-card">
+                        <div class="holo-shine"></div>
+                        <div class="card-header-bar">
+                            <span class="card-security-id">PSC-ID // #8849-ALPHA</span>
+                            <div class="card-chip"></div>
+                        </div>
+
+                        <!-- Portrait Photo with Scanline Reticle -->
+                        <div class="holo-photo-container">
+                            <img src="assets/profile-suit.jpg" alt="Prashant Singh Chauhan Portrait" class="holo-photo" id="holo-portrait-img">
+                            <div class="photo-reticle"></div>
+                        </div>
+
+                        <!-- Biometric Telemetry -->
+                        <div class="card-bio-info">
+                            <div class="bio-name">PRASHANT SINGH CHAUHAN</div>
+                            <div class="bio-role">&gt; FULL-STACK DEVELOPER</div>
+                            <div class="bio-meta-row">
+                                <span>AFFILIATION: PCE NAGPUR</span>
+                                <span id="holo-feed-label">FEED: COMMANDER_V1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Switch Photo Feed Button -->
+                    <button class="switch-feed-btn" id="toggle-portrait-btn">
+                        <span class="icon">⟳</span> FEED: CASUAL MODE
+                    </button>
+                </div>
+
+                <!-- About Narrative Text -->
+                <div class="about-narrative sci-fi-reveal">
+                    <h3>ENGINEERING THE <span>FUTURE</span></h3>
+                    <p>
+                        Hello! I am Prashant Singh Chauhan, currently pursuing Engineering at <strong>Priyadarshini College of Engineering</strong>. I have a deep passion for technology, computer science, and engineering interactive digital solutions.
+                    </p>
+                    <p>
+                        I love pushing the boundaries of what is possible on the web—from responsive high-performance architectures to immersive 3D WebGL experiences. My approach combines clean, maintainable code with aesthetic futuristic visual design.
+                    </p>
+
+                    <!-- Academic Credential Box -->
+                    <div class="academic-credential-box">
+                        <div class="academic-title">
+                            <span>🎓</span>
+                            <span>Priyadarshini College of Engineering</span>
+                        </div>
+                        <div class="academic-sub">Bachelor of Engineering | Computer Engineering Track</div>
+                    </div>
+
+                    <div class="about-tags">
+                        <span class="about-tag">WebGL &amp; Three.js</span>
+                        <span class="about-tag">Frontend Architecture</span>
+                        <span class="about-tag">Data Structures &amp; Algorithms</span>
+                        <span class="about-tag">JavaScript / ES6+</span>
+                        <span class="about-tag">UI/UX Systems</span>
+                    </div>
+
+                    <a href="https://github.com/prashantchauhann" target="_blank" rel="noopener noreferrer" class="cyber-btn cyber-btn-outline">
+                        <span>VIEW GITHUB REPOSITORIES</span>
+                        <span class="btn-corner-deco"></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ---------------------------------------
+             3. SKILLS MATRIX (CYBER DECK)
+             --------------------------------------- -->
+        <section id="skills">
+            <div class="section-header sci-fi-reveal">
+                <span class="section-tag">// COMPETENCY MATRIX</span>
+                <h2 class="section-title">TECHNICAL <span>SKILLS</span></h2>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="skills-filter-row sci-fi-reveal">
+                <button class="skill-filter-btn active" data-filter="all">ALL MODULES</button>
+                <button class="skill-filter-btn" data-filter="frontend">FRONTEND &amp; 3D</button>
+                <button class="skill-filter-btn" data-filter="tools">TOOLS &amp; WORKFLOWS</button>
+                <button class="skill-filter-btn" data-filter="core">ENGINEERING CORE</button>
+            </div>
+
+            <div class="skills-grid">
+                <!-- Skill 1: Frontend -->
+                <div class="skill-card sci-fi-reveal" data-category="frontend">
+                    <div class="skill-icon-header">
+                        <span class="skill-icon">⚡</span>
+                        <span class="skill-category-badge">FRONTEND</span>
+                    </div>
+                    <h3 class="skill-title">Frontend Architecture</h3>
+                    <p class="skill-desc">HTML5, modern CSS3 (Flexbox/Grid), JavaScript ES6+. Crafting responsive, accessible, high-performance interfaces.</p>
+                    <div class="skill-level-wrapper">
+                        <div class="skill-level-meta">
+                            <span>MASTERY LEVEL</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="skill-level-track">
+                            <div class="skill-level-fill" data-level="95"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 2: 3D WebGL -->
+                <div class="skill-card sci-fi-reveal" data-category="frontend">
+                    <div class="skill-icon-header">
+                        <span class="skill-icon">🌐</span>
+                        <span class="skill-category-badge">FRONTEND</span>
+                    </div>
+                    <h3 class="skill-title">3D WebGL &amp; Three.js</h3>
+                    <p class="skill-desc">Procedural 3D modeling, dynamic lighting, shaders, camera choreography, and real-time interactive scenes.</p>
+                    <div class="skill-level-wrapper">
+                        <div class="skill-level-meta">
+                            <span>MASTERY LEVEL</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-level-track">
+                            <div class="skill-level-fill" data-level="85"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 3: Tools -->
+                <div class="skill-card sci-fi-reveal" data-category="tools">
+                    <div class="skill-icon-header">
+                        <span class="skill-icon">🛠️</span>
+                        <span class="skill-category-badge">TOOLS</span>
+                    </div>
+                    <h3 class="skill-title">Developer Toolchain</h3>
+                    <p class="skill-desc">Git, GitHub, VS Code, DevTools profiling, command-line environments, and modern version control workflows.</p>
+                    <div class="skill-level-wrapper">
+                        <div class="skill-level-meta">
+                            <span>MASTERY LEVEL</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-level-track">
+                            <div class="skill-level-fill" data-level="90"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 4: Core CS -->
+                <div class="skill-card sci-fi-reveal" data-category="core">
+                    <div class="skill-icon-header">
+                        <span class="skill-icon">🧠</span>
+                        <span class="skill-category-badge">CORE</span>
+                    </div>
+                    <h3 class="skill-title">Core Engineering &amp; DSA</h3>
+                    <p class="skill-desc">Algorithmic thinking, data structures, computational logic, time/space optimization, and problem solving.</p>
+                    <div class="skill-level-wrapper">
+                        <div class="skill-level-meta">
+                            <span>MASTERY LEVEL</span>
+                            <span>84%</span>
+                        </div>
+                        <div class="skill-level-track">
+                            <div class="skill-level-fill" data-level="84"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 5: UI/UX -->
+                <div class="skill-card sci-fi-reveal" data-category="frontend">
+                    <div class="skill-icon-header">
+                        <span class="skill-icon">🎨</span>
+                        <span class="skill-category-badge">FRONTEND</span>
+                    </div>
+                    <h3 class="skill-title">Cyberpunk &amp; UI Systems</h3>
+                    <p class="skill-desc">Glassmorphism, futuristic HUD layouts, micro-interactions, responsive typography, and tactile Web Audio feedback.</p>
+                    <div class="skill-level-wrapper">
+                        <div class="skill-level-meta">
+                            <span>MASTERY LEVEL</span>
+                            <span>92%</span>
+                        </div>
+                        <div class="skill-level-track">
+                            <div class="skill-level-fill" data-level="92"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 6: AI Systems -->
+                <div class="skill-card sci-fi-reveal" data-category="core">
+                    <div class="skill-icon-header">
+                        <span class="skill-icon">🤖</span>
+                        <span class="skill-category-badge">CORE</span>
+                    </div>
+                    <h3 class="skill-title">AI &amp; Smart Systems</h3>
+                    <p class="skill-desc">Designing AI-powered mock systems, user feedback loops, interview evaluation logic, and intelligent workflow automation.</p>
+                    <div class="skill-level-wrapper">
+                        <div class="skill-level-meta">
+                            <span>MASTERY LEVEL</span>
+                            <span>82%</span>
+                        </div>
+                        <div class="skill-level-track">
+                            <div class="skill-level-fill" data-level="82"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ---------------------------------------
+             4. FEATURED PROJECTS (QUANTUM HOLO-DECKS)
+             --------------------------------------- -->
+        <section id="projects">
+            <div class="section-header sci-fi-reveal">
+                <span class="section-tag">// DEPLOYMENT VAULT</span>
+                <h2 class="section-title">FEATURED <span>PROJECTS</span></h2>
+            </div>
+
+            <div class="projects-grid">
+                <!-- Project 1: College Student Dashboard -->
+                <div class="project-card sci-fi-reveal">
+                    <div class="project-card-header">
+                        <span class="project-id-tag">PROJECT_01</span>
+                        <span class="project-status">● LIVE DEPLOYMENT</span>
+                    </div>
+                    <h3 class="project-title">College Student Dashboard</h3>
+                    <p class="project-description">
+                        An intuitive academic analytics portal designed to empower college students to monitor daily attendance, track examination results, and review comprehensive progress metrics with zero friction.
+                    </p>
+                    <div class="project-tech-tags">
+                        <span class="project-tech-tag">HTML5</span>
+                        <span class="project-tech-tag">CSS3</span>
+                        <span class="project-tech-tag">JavaScript</span>
+                        <span class="project-tech-tag">Data Visualization</span>
+                    </div>
+                    <div class="project-actions">
+                        <a href="https://github.com/prashantchauhann/CollegeWeb.git" target="_blank" rel="noopener noreferrer" class="cyber-btn cyber-btn-primary">
+                            <span>VIEW SOURCE</span>
+                            <span class="btn-corner-deco"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2: AI Interview Preparing System -->
+                <div class="project-card sci-fi-reveal">
+                    <div class="project-card-header">
+                        <span class="project-id-tag">PROJECT_02</span>
+                        <span class="project-status">● INTELLIGENT SYSTEM</span>
+                    </div>
+                    <h3 class="project-title">AI-Based Interview Preparing System</h3>
+                    <p class="project-description">
+                        An intelligent preparation platform created to elevate student interview confidence. Simulates interactive technical and HR scenarios, pinpoints communication mistakes, and generates structured guidance to master hiring rounds.
+                    </p>
+                    <div class="project-tech-tags">
+                        <span class="project-tech-tag">AI/ML Logic</span>
+                        <span class="project-tech-tag">Speech Analytics</span>
+                        <span class="project-tech-tag">Interactive UI</span>
+                        <span class="project-tech-tag">Adaptive Feedback</span>
+                    </div>
+                    <div class="project-actions">
+                        <a href="https://github.com/prashantchauhann/CollegeWeb.git" target="_blank" rel="noopener noreferrer" class="cyber-btn cyber-btn-primary">
+                            <span>VIEW SOURCE</span>
+                            <span class="btn-corner-deco"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 3: 3D Futuristic Portfolio Engine -->
+                <div class="project-card sci-fi-reveal">
+                    <div class="project-card-header">
+                        <span class="project-id-tag">PROJECT_03</span>
+                        <span class="project-status">● ACTIVE WEBGL</span>
+                    </div>
+                    <h3 class="project-title">Quantum 3D WebGL Portfolio</h3>
+                    <p class="project-description">
+                        A cybernetic, real-time 3D web experience with procedural WebGL models, multi-axis gyroscope physics, dynamic sound synthesis, holographic card tilt, and an interactive developer CLI console.
+                    </p>
+                    <div class="project-tech-tags">
+                        <span class="project-tech-tag">Three.js</span>
+                        <span class="project-tech-tag">WebGL</span>
+                        <span class="project-tech-tag">Web Audio API</span>
+                        <span class="project-tech-tag">Glassmorphism</span>
+                    </div>
+                    <div class="project-actions">
+                        <a href="#home" class="cyber-btn cyber-btn-outline">
+                            <span>INSPECT 3D SCENE</span>
+                            <span class="btn-corner-deco"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ---------------------------------------
+             5. INTERACTIVE SCI-FI TERMINAL (CLI)
+             --------------------------------------- -->
+        <section id="terminal">
+            <div class="section-header sci-fi-reveal">
+                <span class="section-tag">// DEVELOPER CONSOLE</span>
+                <h2 class="section-title">INTERACTIVE <span>TERMINAL</span></h2>
+            </div>
+
+            <div class="terminal-wrapper sci-fi-reveal">
+                <div class="terminal-card">
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <span class="term-btn term-red"></span>
+                            <span class="term-btn term-yellow"></span>
+                            <span class="term-btn term-green"></span>
+                        </div>
+                        <span class="terminal-title">prashant@core:~/cli-v2.6</span>
+                        <span class="terminal-hint">[TYPE 'HELP']</span>
+                    </div>
+
+                    <div class="terminal-body" id="terminal-output">
+                        <div class="terminal-line">
+<span class="cmd-cyan">PRASHANT SINGH CHAUHAN [QUANTUM TERMINAL OS v2.6]</span>
+Type <span class="cmd-yellow">'help'</span> to view available system commands.
+Try <span class="cmd-green">'skills'</span>, <span class="cmd-green">'projects'</span>, <span class="cmd-green">'model drone'</span>, or <span class="cmd-green">'matrix'</span>.
+                        </div>
+                    </div>
+
+                    <div class="terminal-input-row">
+                        <span class="prompt">prashant@core:~$</span>
+                        <input type="text" id="terminal-input" class="terminal-input" placeholder="Type a command (e.g. help, skills, model drone)..." autocomplete="off" spellcheck="false">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ---------------------------------------
+             6. CONTACT TRANSMITTER (UPLINK)
+             --------------------------------------- -->
+        <section id="contact">
+            <div class="section-header sci-fi-reveal">
+                <span class="section-tag">// QUANTUM UPLINK</span>
+                <h2 class="section-title">GET IN <span>TOUCH</span></h2>
+            </div>
+
+            <div class="contact-container">
+                <!-- Contact Info & Quick Links -->
+                <div class="contact-info-panel sci-fi-reveal">
+                    <h3>ESTABLISH DIRECT TRANSMISSION</h3>
+                    <p>
+                        I am currently open to exciting software engineering opportunities, collaborative projects, and tech ventures. Send a message through the quantum link or connect directly via social uplinks below!
+                    </p>
+
+                    <div class="uplink-links">
+                        <!-- Email Link -->
+                        <div class="uplink-btn copy-uplink-btn" data-copy="prashantsinghchauhan780@gmail.com" title="Click to copy email">
+                            <div class="uplink-meta">
+                                <span class="uplink-icon">✉</span>
+                                <div>
+                                    <div class="uplink-name">EMAIL UPLINK</div>
+                                    <div class="uplink-val">pschauhan153200@gmail.com</div>
+                                </div>
+                            </div>
+                            <span class="cyber-btn-outline" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">COPY</span>
+                        </div>
+
+                        <!-- LinkedIn Link -->
+                        <a href="https://www.linkedin.com/in/prashant-singh-chauhan-0964aa327?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" class="uplink-btn">
+                            <div class="uplink-meta">
+                                <span class="uplink-icon">in</span>
+                                <div>
+                                    <div class="uplink-name">LINKEDIN NETWORK</div>
+                                    <div class="uplink-val">prashant-singh-chauhan</div>
+                                </div>
+                            </div>
+                            <span class="cyber-btn-outline" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">CONNECT ↗</span>
+                        </a>
+
+                        <!-- GitHub Link -->
+                        <a href="https://github.com/prashantchauhann" target="_blank" rel="noopener noreferrer" class="uplink-btn">
+                            <div class="uplink-meta">
+                                <span class="uplink-icon">⚡</span>
+                                <div>
+                                    <div class="uplink-name">GITHUB ARCHIVE</div>
+                                    <div class="uplink-val">@prashantchauhann</div>
+                                </div>
+                            </div>
+                            <span class="cyber-btn-outline" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">EXPLORE ↗</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Interactive Quantum Message Transmitter Form -->
+                <div class="contact-form-panel sci-fi-reveal">
+                    <form id="quantum-transmission-form">
+                        <div class="form-group">
+                            <label for="form-name">CODENAME / NAME</label>
+                            <input type="text" id="form-name" required placeholder="Enter your name...">
+                        </div>
+                        <div class="form-group">
+                            <label for="form-email">COMMUNICATION FREQUENCY (EMAIL)</label>
+                            <input type="email" id="form-email" required placeholder="name@domain.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="form-message">TRANSMISSION PACKET (MESSAGE)</label>
+                            <textarea id="form-message" rows="4" required placeholder="Type your transmission message here..."></textarea>
+                        </div>
+                        <button type="submit" class="cyber-btn cyber-btn-primary" style="width: 100%; justify-content: center;">
+                            <span>TRANSMIT PACKET</span>
+                            <span class="btn-corner-deco"></span>
+                        </button>
+                    </form>
+
+                    <div id="transmission-status" class="transmission-status"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ---------------------------------------
+             7. FOOTER & SYSTEM DIAGNOSTICS
+             --------------------------------------- -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <strong>PRASHANT SINGH CHAUHAN</strong>
+                    <span>PCE Engineering | Interactive 3D WebGL Portfolio</span>
+                </div>
+                <div class="footer-telemetry">
+                    <span>BUILD 2026.09 // SYSTEM STATUS: NOMINAL [100%]</span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/three-scene.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
